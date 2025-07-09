@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
 engine = create_async_engine(
-    DB_COIN,
+    DB_CONN,
     isolation_level = "READ COMMITED"
 )
 
