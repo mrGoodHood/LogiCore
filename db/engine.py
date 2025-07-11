@@ -6,9 +6,12 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from ..settings import DB_CONN
 
 
+class Base(DeclarativeBase):
+    pass
+
 engine = create_async_engine(
     DB_CONN,
-    isolation_level = "READ COMMITED"
+    isolation_level = "READ COMMITTED"
 )
 
 async_session_maker = sessionmaker(
@@ -28,7 +31,7 @@ async def create_db_and_tables():
 
 @asynccontextmanager
 async def async_session_context():
-    connection = async_session_mamker()
+    connection = async_session_maker()
     try:
         yield connection
     except Exception as error:
