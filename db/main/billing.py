@@ -1,5 +1,5 @@
 from random import randint
-from db.schema.engine import async_session_maker
+from db import async_session_maker
 
 
 async def get_new_acc_number():
