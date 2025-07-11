@@ -3,6 +3,8 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
+from ..settings import DB_CONN
+
 
 engine = create_async_engine(
     DB_CONN,
@@ -22,3 +24,17 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 async def create_db_and_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+
+@asynccontextmanager
+async def async_session_context():
+    connection = async_session_mamker()
+    try:
+        yield connection
+    except Exception as error:
+        await connection.rollback()
+        raise error
+    else:
+        await connection.commit()
+    finally:
+        await connection.close()
