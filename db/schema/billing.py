@@ -1,4 +1,11 @@
+from enum import StrEnum
 from sqlalchemy.orm import mapped_column as mcol
+from sqlalchemy.sql.functions import  func
+from sqlalchemy.dialects.postgresql import BIGINT, INTEGER, TEXT, VARCHAR, TIMESTAMP, BOOLEAN, ENUM, NUMERIC
+from sqlalchemy import ForeignKey
+
+from .user import BaseUser
+from ..engine import Base
 
 
 class ContractType(StrEnum):
@@ -19,4 +26,14 @@ class Contract(Base):
     Note = mcol(TEXT)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     Closed = mcol(TIMESTAMP(timezone=False))
+    IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class ContractSettings(Base):
+    __tablename__ = "bill_contract_settings"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    ContractID = mcol(ForeignKey(Contract.ID, ondelete="CASCADE"), nullable=False)
+    Key = mcol(VARCHAR(length=100), nullable=False, index=True)
+    Value = mcol(TEXT)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
