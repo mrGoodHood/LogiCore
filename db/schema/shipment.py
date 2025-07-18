@@ -46,3 +46,14 @@ class BatchDoc(Base):
     Document = mcol(BYTEA, nullable=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class ShipPoint(Base):
+    __tablename__ = "ship_point"
+    ID = mcol(SMALLINT, primary_key=True, autoincrement=True, index=True)
+    PostalCode = mcol(VARCHAR(length=6))
+    Region = mcol(VARCHAR(length=256))
+    Settlement = mcol(VARCHAR(length=256))
+    District = mcol(VARCHAR(length=256))
+    AddressSource = mcol(VARCHAR(length=256))
+    # TODO: Дописать атрибуты
