@@ -38,3 +38,11 @@ class Batch(Base):
     TotalRateVat = mcol(INTEGER, nullable=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class BatchDoc(Base):
+    __tablename__ = "ship_batch_doc"
+    BatchID = mcol(ForeignKey(Batch.ID, ondelete="CASCADE"), nullable=False,  primary_key=True)
+    Document = mcol(BYTEA, nullable=False)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
+    IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
