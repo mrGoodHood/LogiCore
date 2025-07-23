@@ -62,3 +62,12 @@ class ShipPoint(Base):
     WorkingHours = mcol(JSONB)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class Barcode(Base):
+    __tablename__ = "ship_barcode"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    ContractID = mcol(ForeignKey(Contract.ID, ondelete="CASCADE"), nullable=False)
+    UserID = mcol(ForeignKey(BaseUser.id, ondelete="CASCADE"), nullable=False)
+    BatchID = mcol(ForeignKey(Batch.ID, ondelete="CASCADE"))
+    ExtID = mcol(BIGINT, index=True)
