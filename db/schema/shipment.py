@@ -56,4 +56,9 @@ class ShipPoint(Base):
     Settlement = mcol(VARCHAR(length=256))
     District = mcol(VARCHAR(length=256))
     AddressSource = mcol(VARCHAR(length=256))
-    # TODO: Дописать атрибуты
+    Latitude = mcol(NUMERIC(scale=2, precision=6))
+    Longitude = mcol(NUMERIC(scale=2, precision=6))
+    IsClosed = mcol(BOOLEAN, default=False)
+    WorkingHours = mcol(JSONB)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
+    IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
