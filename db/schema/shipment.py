@@ -92,3 +92,9 @@ class Barcode(Base):
     NoTrack = mcol(BOOLEAN, nullable=False, default=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class RateType(Base):
+    __tablename__ = "ship_rate_type"
+    ID = mcol(SMALLINT, primary_key=True, autoincrement=True, index=True)
+    Name = mcol(VARCHAR(length=256), nullable=False)
