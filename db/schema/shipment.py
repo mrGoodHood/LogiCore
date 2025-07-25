@@ -98,3 +98,11 @@ class RateType(Base):
     __tablename__ = "ship_rate_type"
     ID = mcol(SMALLINT, primary_key=True, autoincrement=True, index=True)
     Name = mcol(VARCHAR(length=256), nullable=False)
+
+
+class Rate(Base):
+    __tablename__ = "ship_rate"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    BatchID = mcol(ForeignKey(Batch.ID, ondelete="CASCADE"))
+    BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"))
+    BatchRateType = mcol(ForeignKey(RateType.ID, ondelete="CASCADE"))
