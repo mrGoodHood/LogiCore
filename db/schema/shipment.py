@@ -106,3 +106,6 @@ class Rate(Base):
     BatchID = mcol(ForeignKey(Batch.ID, ondelete="CASCADE"))
     BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"))
     BatchRateType = mcol(ForeignKey(RateType.ID, ondelete="CASCADE"))
+    BatchRateValue = mcol(INTEGER)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
+    IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
