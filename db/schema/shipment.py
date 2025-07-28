@@ -98,6 +98,7 @@ class RateType(Base):
     __tablename__ = "ship_rate_type"
     ID = mcol(SMALLINT, primary_key=True, autoincrement=True, index=True)
     Name = mcol(VARCHAR(length=256), nullable=False)
+    VerboseName = mcol(VARCHAR(length=256))
 
 
 class Rate(Base):
