@@ -37,3 +37,13 @@ class ContractSettings(Base):
     Value = mcol(TEXT)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class Contract2User(Base):
+    __tablename__ = "bill_contract2user"
+    ID = mcol(INTEGER, primary_key=True, autoincrement=True, index=True)
+    ContractID = mcol(ForeignKey(Contract.ID, ondelete="CASCADE"), nullable=False)
+    UserID = mcol(ForeignKey(BaseUser.id, ondelete="RESTRICT"), nullable=False)
+    BeginDateTime = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
+    EndDateTime = mcol(TIMESTAMP(timezone=False), nullable=True)
+    IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
