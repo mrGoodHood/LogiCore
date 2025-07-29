@@ -47,3 +47,9 @@ class Contract2User(Base):
     BeginDateTime = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
     EndDateTime = mcol(TIMESTAMP(timezone=False), nullable=True)
     IsDeleted = mcol(BOOLEAN, nullable=False, default=False)
+
+
+class TransactionType(StrEnum):
+    DEBIT = 'DEBIT'
+    CREDIT = 'CREDIT'
+    CORRECTION = 'CORRECTION'
