@@ -53,3 +53,17 @@ class TransactionType(StrEnum):
     DEBIT = 'DEBIT'
     CREDIT = 'CREDIT'
     CORRECTION = 'CORRECTION'
+
+
+class Transactions(Base):
+    __tablename__ = "bill_transaction"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    ContractID = mcol(ForeignKey(Contract.ID, ondelete="RESTRICT"), nullable=False)
+    UserID = mcol(ForeignKey(BaseUser.id, ondelete="RESTRICT"), nullable=False)
+    TrxType = mcol(ENUM(TransactionType, name='trx_type_enum'), nullable=False)
+    TrxSourceLink = mcol(BIGINT)
+    TrxAmount = mcol(NUMERIC(18,4), nullable=False, default=0)
+    TrxDateTime = mcol(TIMESTAMP(timezone=False))
+    TrxProcessDateTime = mcol(TIMESTAMP(timezone=False))
+    TrxDesc = mcol(TEXT)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.now(), nullable=False)
