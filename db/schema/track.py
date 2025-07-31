@@ -15,3 +15,10 @@ class TrackTicket(Base):
     Value = mcol(VARCHAR(length=256), nullable=False)
     CheckDate = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
+
+
+class TrackBarcodeTicket(Base):
+    __tablename__ = "track_ticket_barcode"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"), nullable=False)
+    TicketID = mcol(ForeignKey(TrackTicket.ID, ondelete="CASCADE"), nullable=False)
