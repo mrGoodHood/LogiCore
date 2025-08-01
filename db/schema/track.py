@@ -63,3 +63,6 @@ class TrackShipStatus(Base):
     OperationName = mcol(VARCHAR(length=256), nullable=False)
     AttributeCode = mcol(VARCHAR(length=10), nullable=False)
     AttributeName = mcol(VARCHAR(length=256), nullable=False)
+    VerboseName = mcol(VARCHAR(length=256))
+    IsFinalOperation = mcol(BOOLEAN, nullable=False)
+    IsReturnOperation = mcol(BOOLEAN, nullable=False)
