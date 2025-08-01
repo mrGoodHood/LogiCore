@@ -31,3 +31,13 @@ class TrackMailCategory(Base):
     Description = mcol(VARCHAR(length=256), nullable=False)
     VerboseName = mcol(VARCHAR(length=256))
     IsCODExists = mcol(BOOLEAN, nullable=False)
+
+
+class TrackCODStatus(Base):
+    __tablename__ = "track_cod_status"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    OperationCode = mcol(VARCHAR(length=10), nullable=False)
+    OperationName = mcol(VARCHAR(length=256), nullable=False)
+    OperationDescription = mcol(VARCHAR(length=256), nullable=False)
+    VerboseName = mcol(VARCHAR(length=256))
+    IsFinalOperation = mcol(BOOLEAN, nullable=False)
