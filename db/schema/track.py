@@ -54,3 +54,12 @@ class TrackCODHistory(Base):
     SumPayForward = mcol(NUMERIC(18, 4), nullable=False, default=0)
     OperationDate = mcol(TIMESTAMP(timezone=False),  nullable=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
+
+
+class TrackShipStatus(Base):
+    __tablename__ = "track_ship_status"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    OperationCode = mcol(VARCHAR(length=10), nullable=False)
+    OperationName = mcol(VARCHAR(length=256), nullable=False)
+    AttributeCode = mcol(VARCHAR(length=10), nullable=False)
+    AttributeName = mcol(VARCHAR(length=256), nullable=False)
