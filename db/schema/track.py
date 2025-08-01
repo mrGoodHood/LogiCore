@@ -41,3 +41,11 @@ class TrackCODStatus(Base):
     OperationDescription = mcol(VARCHAR(length=256), nullable=False)
     VerboseName = mcol(VARCHAR(length=256))
     IsFinalOperation = mcol(BOOLEAN, nullable=False)
+
+
+class TrackCODHistory(Base):
+    __tablename__ = "track_cod_history"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"), nullable=False)
+    TrackCODStatusID = mcol(ForeignKey(TrackCODStatus.ID, ondelete="CASCADE"), nullable=False)
+    CODNumber = mcol(VARCHAR(length=256), nullable=False)
