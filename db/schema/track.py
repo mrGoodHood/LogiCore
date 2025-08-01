@@ -49,3 +49,7 @@ class TrackCODHistory(Base):
     BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"), nullable=False)
     TrackCODStatusID = mcol(ForeignKey(TrackCODStatus.ID, ondelete="CASCADE"), nullable=False)
     CODNumber = mcol(VARCHAR(length=256), nullable=False)
+    IndexEvent = mcol(VARCHAR(length=10), nullable=False)
+    SumPayForward = mcol(NUMERIC(18, 4), nullable=False, default=0)
+    OperationDate = mcol(TIMESTAMP(timezone=False),  nullable=False)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
