@@ -74,3 +74,5 @@ class TrackShipHistory(Base):
     BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"), nullable=False)
     TrackStatusID = mcol(ForeignKey(TrackShipStatus.ID, ondelete="CASCADE"), nullable=False)
     IndexOperation = mcol(VARCHAR(length=10), nullable=False)
+    OperationDate = mcol(TIMESTAMP(timezone=False), nullable=False)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
