@@ -66,3 +66,11 @@ class TrackShipStatus(Base):
     VerboseName = mcol(VARCHAR(length=256))
     IsFinalOperation = mcol(BOOLEAN, nullable=False)
     IsReturnOperation = mcol(BOOLEAN, nullable=False)
+
+
+class TrackShipHistory(Base):
+    __tablename__ = "track_ship_history"
+    ID = mcol(BIGINT, primary_key=True, autoincrement=True, index=True)
+    BarcodeID = mcol(ForeignKey(Barcode.ID, ondelete="CASCADE"), nullable=False)
+    TrackStatusID = mcol(ForeignKey(TrackShipStatus.ID, ondelete="CASCADE"), nullable=False)
+    IndexOperation = mcol(VARCHAR(length=10), nullable=False)
