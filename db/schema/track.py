@@ -76,3 +76,15 @@ class TrackShipHistory(Base):
     IndexOperation = mcol(VARCHAR(length=10), nullable=False)
     OperationDate = mcol(TIMESTAMP(timezone=False), nullable=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
+
+
+class TrackSummary(Base):
+    __tablename__ = "track_summary"
+    __table_args__ = (
+        {
+            'postgresql_partition_by': 'LIST ("IsHot")',
+        },
+    )
+    BarcodeID = mcol(ForeignKey(Barcode.ID), primary_key=True, nullable=False)
+    TrackHistoryID = mcol(ForeignKey(TrackShipHistory.ID, ondelete="CASCADE"), nullable=False)
+    TrackCODHistoryID = mcol(ForeignKey(TrackCODHistory.ID, ondelete="SET NULL"))
