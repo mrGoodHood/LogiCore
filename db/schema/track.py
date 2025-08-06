@@ -88,3 +88,7 @@ class TrackSummary(Base):
     BarcodeID = mcol(ForeignKey(Barcode.ID), primary_key=True, nullable=False)
     TrackHistoryID = mcol(ForeignKey(TrackShipHistory.ID, ondelete="CASCADE"), nullable=False)
     TrackCODHistoryID = mcol(ForeignKey(TrackCODHistory.ID, ondelete="SET NULL"))
+    IsHot = mcol(BOOLEAN, primary_key=True, nullable=False)
+    IsCODHot = mcol(BOOLEAN, nullable=False, default=False)
+    IsReturned = mcol(BOOLEAN, nullable=False, default=False)
+    Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
