@@ -92,3 +92,10 @@ class TrackSummary(Base):
     IsCODHot = mcol(BOOLEAN, nullable=False, default=False)
     IsReturned = mcol(BOOLEAN, nullable=False, default=False)
     Created = mcol(TIMESTAMP(timezone=False), server_default=func.current_timestamp(), nullable=False)
+
+
+ddl = DDL(
+    "CREATE TABLE IF NOT EXISTS track_summary_is_hot PARTITION OF track_summary FOR VALUES IN (true);"
+    "CREATE TABLE IF NOT EXISTS track_summary_is_not_hot PARTITION OF track_summary FOR VALUES IN (false);"
+)
+event.listen(TrackSummary.__table__, "after_create", ddl)
