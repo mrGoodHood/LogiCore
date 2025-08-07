@@ -1,0 +1,28 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff-format
+        language: python
+        types: [ python ]
+        files: app/
+        entry: ruff format
+        args: [ "format", "--config", "pyproject.toml" ]
+
+      - id: ruff
+        name: ruff
+        language: python
+        types: [ python ]
+        files: app/
+        entry: ruff check
+        args: [ "check", "--config", "pyproject.toml" ]
+
+      - id: mypy
+        name: mypy
+        language: python
+        types: [ python ]
+        files: app/
+        entry: mypy
+        args: [ "--config-file", "pyproject.toml" ]
+
+fail_fast: true
