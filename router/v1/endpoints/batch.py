@@ -30,3 +30,22 @@ def size_validator(value: int) -> int:
         },
     },
 )
+async def batch_create(
+        batch_info: CreateBatchRequest,
+        address_normaliser: AddressNormalizer = Depends(get_address_normaliser),
+        batch_transformer: BatchTransformer = Depends(get_order_creator),
+        batch_creator: BatchCreator = Depends(get_batch_creator),
+) -> Union[JSONResponse, None]:
+    user_id = "TODO"
+
+    user_settings = await get_contract_settings(user_id)
+    batch_info, normalise_errors = await address_normaliser.normalize(batch_info.model_dump(), user_settings)
+
+    if normalise_errors:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content=CreateBatchErrorResponse(
+                order_errors=normalise_errors,
+                batch_errors=[]
+            ).model_dump()
+        )
