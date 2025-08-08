@@ -49,3 +49,6 @@ async def batch_create(
                 batch_errors=[]
             ).model_dump()
         )
+
+    batch_short_info_list = BatchShortInfoMapper().map_many(result)
+    return GetBatchListResponse(batches=batch_short_info_list)
