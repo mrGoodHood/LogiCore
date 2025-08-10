@@ -52,3 +52,23 @@ async def batch_create(
 
     batch_short_info_list = BatchShortInfoMapper().map_many(result)
     return GetBatchListResponse(batches=batch_short_info_list)
+
+
+@router.post(
+    path="",
+    summary="Создание партии посылок.",
+    response_model=None,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Bad Request.",
+            "model": CreateBatchErrorResponse,
+        },
+    },
+)
+async def batch_create(
+        batch_info: CreateBatchRequest,
+        address_normaliser: AddressNormalizer = Depends(get_address_normaliser),
+        batch_transformer: BatchTransformer = Depends(get_order_creator),
+        batch_creator: BatchCreator = Depends(get_batch_creator),
+) -> Union[JSONResponse, None]:
+    user_id = "TODO"
