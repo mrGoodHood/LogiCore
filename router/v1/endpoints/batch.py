@@ -75,3 +75,17 @@ async def batch_create(
 
     user_settings = await get_contract_settings(user_id)
     batch_info, normalise_errors = await address_normaliser.normalize(batch_info.model_dump(), user_settings)
+
+
+    if normalise_errors:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content=CreateBatchErrorResponse(
+                order_errors=normalise_errors,
+                batch_errors=[]
+            ).model_dump()
+        )
+
+    batch = batch_transformer.transform(batch_info, user_settings)
+    post_api = PostAPiClient(user_settings["access_token"], user_settings["auth_key"])
+    batch_errors, order_errors = await batch_creator.create(user_id, post_api, batch)
