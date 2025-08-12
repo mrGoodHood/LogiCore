@@ -72,3 +72,6 @@ async def batch_create(
         batch_creator: BatchCreator = Depends(get_batch_creator),
 ) -> Union[JSONResponse, None]:
     user_id = "TODO"
+
+    user_settings = await get_contract_settings(user_id)
+    batch_info, normalise_errors = await address_normaliser.normalize(batch_info.model_dump(), user_settings)
