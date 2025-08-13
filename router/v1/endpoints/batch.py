@@ -89,3 +89,14 @@ async def batch_create(
     batch = batch_transformer.transform(batch_info, user_settings)
     post_api = PostAPiClient(user_settings["access_token"], user_settings["auth_key"])
     batch_errors, order_errors = await batch_creator.create(user_id, post_api, batch)
+
+    if batch_errors or order_errors:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content=CreateBatchErrorResponse(
+                order_errors=order_errors,
+                batch_errors=batch_errors
+            ).model_dump()
+        )
+
+    return None
