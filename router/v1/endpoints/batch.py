@@ -119,3 +119,19 @@ async def batch_create(
         },
     },
 )
+
+async def get_documents(
+        batch_name: str,
+        batch_documents_getter: BatchDocumentsGetter = Depends(get_batch_documents_getter),
+) -> Union[Response]:
+    user_id = "fd42a0b9-66f7-402c-ab04-51fbe09bce16"
+    result = await batch_documents_getter.get(user_id, batch_name)
+
+    if isinstance(result, GetBatchDocumentsError):
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content=result.model_dump()
+        )
+
+    headers = {"Content-Disposition": f"attachment; filename=doc_{batch_name}.zip"}
+    return Response(result, headers=headers, media_type="application/zip")
