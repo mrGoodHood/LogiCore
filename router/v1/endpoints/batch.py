@@ -100,3 +100,22 @@ async def batch_create(
         )
 
     return None
+
+
+@router.get(
+    path="/{batch_name}/documents",
+    summary="Генерация пакета документации.",
+    description='''
+    Генерирует и возвращает zip архив с 4-мя файлами:
+    \n  - Export.xls, Export.csv — список с основными данными по заявкам в составе партии;
+    \n  - F103.pdf — форма ф103 по заявкам в составе партии;
+    \n  - В зависимости от типа и категории отправлений, формируется комбинация из сопроводительных документов в формате pdf (формы: f7, f112, f22).
+    ''',
+    response_model=None,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Bad Request.",
+            "model": GetBatchDocumentsError,
+        },
+    },
+)
