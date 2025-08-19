@@ -33,3 +33,17 @@ async def get_cod_registry(
 
     registries = await cod_registry_getter.get(user.id, Decimal(cod_fee))
     return registries
+
+
+@router.get(
+    path="/registry/csv",
+    summary="Получить csv файл с реестром всех наложенных платежей.",
+    description="Получить csv файл с реестром всех наложенных платежей",
+    response_class = Response,
+)
+async def get_cod_registry_file(
+        cod_registry_getter: CODRegistryGetter = Depends(get_cod_registry_getter),
+        user: User = Depends(current_active_user),
+) -> Response:
+    user_settings = await get_contract_settings(user.id)
+    cod_fee = user_settings.get("cod_fee")
