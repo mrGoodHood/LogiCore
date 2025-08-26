@@ -47,3 +47,11 @@ async def get_cod_registry_file(
 ) -> Response:
     user_settings = await get_contract_settings(user.id)
     cod_fee = user_settings.get("cod_fee")
+
+    if not cod_fee:
+        raise HTTPException(detail=f"cod_fee не определен у пользователя {user.id}", status_code=404)
+
+    buffer = await cod_registry_getter.get_csv(user.id, Decimal(cod_fee))
+    response = Response(content=buffer.getvalue(), media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=cod_registries.csv"
+    return response
