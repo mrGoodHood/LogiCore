@@ -55,3 +55,18 @@ async def get_cod_registry_file(
     response = Response(content=buffer.getvalue(), media_type="text/csv")
     response.headers["Content-Disposition"] = "attachment; filename=cod_registries.csv"
     return response
+
+
+@router.get(
+    path="/registry/{cod_registry_id}/csv",
+    summary="Получить csv файл по реестру наложенных платежей.",
+    description="Получить csv файл по реестру наложенных платежей",
+    response_class = Response,
+)
+async def get_cod_registry_file(
+        cod_registry_id: int,
+        cod_registry_getter: CODRegistryGetter = Depends(get_cod_registry_getter),
+        user: User = Depends(current_active_user),
+) -> Response:
+    user_settings = await get_contract_settings(user.id)
+    cod_fee = user_settings.get("cod_fee")
