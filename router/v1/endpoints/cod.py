@@ -97,3 +97,18 @@ async def get_cod_registry_file(
 ) -> FileResponse:
     file_path = await cod_registry_getter.get_dbf(user.id)
     return FileResponse(path=file_path, media_type='application/dbf', filename=file_path.name)
+
+
+@router.get(
+    path="/registry/{cod_registry_id}/dbf",
+    summary="Получить dbf файл по реестру наложенных платежей.",
+    description="Получить dbf файл по реестру наложенных платежей",
+    response_class = FileResponse,
+)
+async def get_cod_registry_file(
+        cod_registry_id: int,
+        cod_registry_getter: CODRegistryGetter = Depends(get_cod_registry_getter),
+        user: User = Depends(current_active_user),
+) -> FileResponse:
+    file_path = await cod_registry_getter.get_dbf_by_cod_registry(user.id, cod_registry_id)
+    return FileResponse(path=file_path, media_type='application/dbf', filename=file_path.name)
