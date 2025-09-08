@@ -9,6 +9,11 @@ LOG_CONFIG["formatters"]["access"]["fmt"] = (
 )
 LOG_CONFIG["formatters"]["default"]["fmt"] = "%(levelprefix)s %(asctime)s - %(message)s"
 
+LOG_CONFIG["loggers"]["apport"] = {
+    "handlers": ["default"],
+    "level": "DEBUG",
+    "propagate": False,
+}
 
 logging.config.dictConfig(LOG_CONFIG)
-logger = logging.getLogger("logicore")
+logger = logging.getLogger("apport")
