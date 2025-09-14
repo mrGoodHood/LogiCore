@@ -88,3 +88,37 @@ async def new_batch(user_id, orders):
         if value:
             total_cost += int(value)
         new_orders.append(new_order)
+
+    acc_id, acc_num, acc_balance = await get_acc_balance(user_id)
+
+    if not await check_balance_fee(acc_id, Decimal(total_cost) / 100):
+        return {'errors': {'detail': 'Недостаточно средств'}}
+
+    body = json.dumps(new_orders)
+    res = await api.order_create(body)
+    ship_date = datetime.strptime(orders.orders.shipping_date, "%Y-%m-%d").date()
+    if res.get('result-ids'):
+        batches = await api.batch_create(res.get('result-ids'), ship_date)
+        for batch in batches['batches']:
+            batch_name = batch['batch-name']
+            batch_id = await save_batch(
+                acc_id,
+                user_id,
+                settings,
+                batch_name
+            )
+            await save_shipment(
+                acc_id,
+                user_id,
+                settings,
+                batch_id,
+                batch_name,
+                res.get('result-ids')
+            )
+
+            await charge_order_fee(
+                acc_id,
+                user_id,
+                batch_name,
+                Decimal(total_cost) / 100
+            )
