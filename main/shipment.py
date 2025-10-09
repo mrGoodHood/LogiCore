@@ -122,3 +122,10 @@ async def new_batch(user_id, orders):
                 batch_name,
                 Decimal(total_cost) / 100
             )
+
+
+async def get_batch_list(user_id, page: str = "", size: str = ""):
+    settings = await get_contract_settings(user_id)
+
+    api = PostAPiClient(settings['access_token'], settings['auth_key'])
+    return await api.get_batch_list(page=page, size=size)
