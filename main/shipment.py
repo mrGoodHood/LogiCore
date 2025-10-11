@@ -135,3 +135,17 @@ async def get_batch_documents(user_id, bath_name):
     settings = await get_contract_settings(user_id)
     api = PostAPiClient(settings['access_token'], settings['auth_key'])
     return await api.get_batch_documents(bath_name, settings['print_type'])
+
+
+async def handle_xls_file(user_id, file):
+
+    data = parse_xls(file)
+
+    address_list = AddressList(
+        address_list=[
+            AddressRow(
+                rownum=row['row_num'],
+                address=row['ADDRESSLINE']
+            ) for row in data
+        ]
+    )
