@@ -129,3 +129,9 @@ async def get_batch_list(user_id, page: str = "", size: str = ""):
 
     api = PostAPiClient(settings['access_token'], settings['auth_key'])
     return await api.get_batch_list(page=page, size=size)
+
+
+async def get_batch_documents(user_id, bath_name):
+    settings = await get_contract_settings(user_id)
+    api = PostAPiClient(settings['access_token'], settings['auth_key'])
+    return await api.get_batch_documents(bath_name, settings['print_type'])
