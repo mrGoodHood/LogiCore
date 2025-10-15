@@ -156,3 +156,33 @@ async def handle_xls_file(user_id, file):
 
     address_validation = await api.norm_address(address_list.address_list)
     address_data = {address['id']: address for address in address_validation}
+
+    for item in data:
+        item['MAILTYPE'] = MAIL_TYPE_CAT[item['MAILTYPE']]
+        item['MASS'] = int(Decimal(item['MASS']) * 1000)
+        item['address_val'] = address_data.get(item['row_num'])
+        mail_cat = "ORDINARY"
+        if Decimal(item['PAYMENT']) * 100 > 0:
+            mail_cat = "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+        elif Decimal(item['VALUE']) * 100 > 0:
+            mail_cat = "WITH_DECLARED_VALUE"
+        index = item['address_val'].get('index')
+        item['cost'] = None
+        if index:
+            cost_request = {
+                'declared-value': item['VALUE'],
+                'index-to': index,
+                'index-from': settings['shipping_point'],
+                "mass": item['MASS'],
+                "mail-category": mail_cat,
+                "mail-type": item['MAILTYPE'],
+            }
+            cost = await api.get_tarif(cost_request)
+            value = cost.get('total-rate')
+            if value:
+                item['cost'] = int(value)
+        item['address_val'] = address_data.get(item['row_num'])
+
+    return {
+        "data": data,
+    }
