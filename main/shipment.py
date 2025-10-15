@@ -149,3 +149,10 @@ async def handle_xls_file(user_id, file):
             ) for row in data
         ]
     )
+
+    settings = await get_contract_settings(user_id)
+
+    api = PostAPiClient(settings['access_token'], settings['auth_key'])
+
+    address_validation = await api.norm_address(address_list.address_list)
+    address_data = {address['id']: address for address in address_validation}
