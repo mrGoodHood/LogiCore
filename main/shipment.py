@@ -186,3 +186,23 @@ async def handle_xls_file(user_id, file):
     return {
         "data": data,
     }
+
+
+async def save_batch(acc_id, user_id, settings, batch_name):
+    api = PostAPiClient(settings['access_token'], settings['auth_key'])
+    batch_data = await api.get_batch(batch_name)
+
+    batch_rate = BatchModelRate(
+        shipment_avia_rate_sum=batch_data['shipment-avia-rate-sum'],
+        shipment_avia_rate_vat_sum=batch_data['shipment-avia-rate-vat-sum'],
+        shipment_completeness_checking_rate_sum=batch_data['shipment-completeness-checking-rate-sum'],
+        shipment_completeness_checking_rate_vat_sum=batch_data['shipment-completeness-checking-rate-vat-sum'],
+        shipment_contents_checking_rate_sum=batch_data['shipment-contents-checking-rate-sum'],
+        shipment_contents_checking_rate_vat_sum=batch_data['shipment-contents-checking-rate-vat-sum'],
+        shipment_functionality_checking_rate_sum=batch_data['shipment-functionality-checking-rate-sum'],
+        shipment_functionality_checking_rate_vat_sum=batch_data['shipment-functionality-checking-rate-vat-sum'],
+        shipment_ground_rate_sum=batch_data['shipment-ground-rate-sum'],
+        shipment_ground_rate_vat_sum=batch_data['shipment-ground-rate-vat-sum'],
+        shipment_insure_rate_sum=batch_data['shipment-insure-rate-sum'],
+        shipment_insure_rate_vat_sum=batch_data['shipment-insure-rate-vat-sum'],
+    )
