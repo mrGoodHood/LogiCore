@@ -220,3 +220,12 @@ async def save_batch(acc_id, user_id, settings, batch_name):
         shipment_with_fitting_rate_sum=batch_data['shipment-with-fitting-rate-sum'],
         shipment_with_fitting_rate_vat_sum=batch_data['shipment-with-fitting-rate-vat-sum'],
     )
+
+    batch = BatchModel(
+        batch_name=batch_data['batch-name'],
+        batch_category=batch_data['mail-category'],
+        batch_status=batch_data['batch-status'],
+        batch_status_date=datetime.strptime(batch_data['batch-status-date'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+        batch_sent_date=datetime.strptime(batch_data['list-number-date'], '%Y-%m-%d').date(),
+        postoffice_code=batch_data['postoffice-code'],
+    )
