@@ -228,4 +228,9 @@ async def save_batch(acc_id, user_id, settings, batch_name):
         batch_status_date=datetime.strptime(batch_data['batch-status-date'], '%Y-%m-%dT%H:%M:%S.%fZ'),
         batch_sent_date=datetime.strptime(batch_data['list-number-date'], '%Y-%m-%d').date(),
         postoffice_code=batch_data['postoffice-code'],
+        postoffice_name=batch_data['postoffice-name'],
+        postoffice_address=batch_data.get('postoffice-address'),
+        mass=batch_data['shipment-mass'],
+        shipment_count=batch_data['shipment-count'],
+        rate=batch_rate
     )
