@@ -237,3 +237,11 @@ async def save_batch(acc_id, user_id, settings, batch_name):
     batch_id = await add_batch(acc_id, user_id, batch)
     await add_rate(batch_id, batch_rate)
     return batch_id
+
+
+async def add_batch(contract_id, user_id, batch_data):
+    async with async_session_maker() as session, session.begin():
+        obj = Batch(
+            ContractID=contract_id,
+            UserID=user_id,
+            BatchName=batch_data.batch_name,
