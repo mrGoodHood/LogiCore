@@ -234,3 +234,6 @@ async def save_batch(acc_id, user_id, settings, batch_name):
         shipment_count=batch_data['shipment-count'],
         rate=batch_rate
     )
+    batch_id = await add_batch(acc_id, user_id, batch)
+    await add_rate(batch_id, batch_rate)
+    return batch_id
