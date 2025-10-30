@@ -262,9 +262,9 @@ async def get_rate_type(rate_name):
     async with async_session_maker() as session, session.begin():
         stmt = select(RateType.ID).where(RateType.Name==rate_name)
         result = await session.execute(stmt)
-        rate_id = result.fetchon()
+        rate_id = result.fetchone()
         if rate_id:
-            return rate_id[1]
+            return rate_id[0]
         obj = RateType(
             Name=rate_name
         )
