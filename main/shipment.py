@@ -257,3 +257,17 @@ async def add_batch(contract_id, user_id, batch_data):
             TotalRate=batch_data.rate.get_rate(),
             TotalRateVat=batch_data.rate.get_rate_vat(),
         )
+
+async def get_rate_type(rate_name):
+    async with async_session_maker() as session, session.begin():
+        stmt = select(RateType.ID).where(RateType.Name==rate_name)
+        result = await session.execute(stmt)
+        rate_id = result.fetchon()
+        if rate_id:
+            return rate_id[1]
+        obj = RateType(
+            Name=rate_name
+        )
+        session.add(obj)
+        await session.commit()
+        return obj.ID
