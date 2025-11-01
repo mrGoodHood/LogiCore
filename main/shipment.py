@@ -271,3 +271,18 @@ async def get_rate_type(rate_name):
         session.add(obj)
         await session.commit()
         return obj.ID
+
+
+async def add_rate(batch_id, batch_rate, barcode_id=None):
+    async with async_session_maker() as session, session.begin():
+        for rate in batch_rate.model_fields:
+            value = getattr(batch_rate, rate)
+            if value:
+                obj = Rate(
+                    BatchID=batch_id,
+                    BarcodeID=barcode_id,
+                    BatchRateType=await get_rate_type(rate),
+                    BatchRateValue=value
+                )
+                session.add(obj)
+        await session.commit()
