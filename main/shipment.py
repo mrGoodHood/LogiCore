@@ -291,3 +291,17 @@ async def add_rate(batch_id, batch_rate, barcode_id=None):
 async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipment_ids=None):
     api = PostAPiClient(settings['access_token'], settings['auth_key'])
     shipments = await api.get_batch_shipments(batch_name)
+    for shipment in shipments:
+        shipment_rate = ShipmentRate(
+            ground_rate=shipment['ground-rate'],
+            ground_rate_with_vat=shipment['ground-rate-with-vat'],
+            ground_rate_wo_vat=shipment['ground-rate-wo-vat'],
+            insr_rate=shipment['insr-rate'],
+            insr_rate_with_vat=shipment['insr-rate-with-vat'],
+            insr_rate_wo_vat=shipment['insr-rate-wo-vat'],
+            mass_rate=shipment['mass-rate'],
+            mass_rate_with_vat=shipment['mass-rate-with-vat'],
+            mass_rate_wo_vat=shipment['mass-rate-wo-vat'],
+            total_rate_wo_vat=shipment['total-rate-wo-vat'],
+            total_vat=shipment['total-vat'],
+        )
