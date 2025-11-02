@@ -289,5 +289,5 @@ async def add_rate(batch_id, batch_rate, barcode_id=None):
 
 
 async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipment_ids=None):
-    api = PostAPiClient()
+    api = PostAPiClient(settings['access_token'], settings['auth_key'])
     shipments = await api.get_batch_shipments(batch_name)
