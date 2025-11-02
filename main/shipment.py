@@ -286,3 +286,8 @@ async def add_rate(batch_id, batch_rate, barcode_id=None):
                 )
                 session.add(obj)
         await session.commit()
+
+
+async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipment_ids=None):
+    api = PostAPiClient()
+    shipments = await api.get_batch_shipments(batch_name)
