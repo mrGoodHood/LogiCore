@@ -305,3 +305,6 @@ async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipmen
             total_rate_wo_vat=shipment['total-rate-wo-vat'],
             total_vat=shipment['total-vat'],
         )
+
+        ship_point_from_id = await get_or_create_ship_point(str(shipment["index-from"]), settings)
+        ship_point_to_id = await get_or_create_ship_point(str(shipment["index-to"]), settings)
