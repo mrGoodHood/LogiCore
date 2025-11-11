@@ -308,3 +308,13 @@ async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipmen
 
         ship_point_from_id = await get_or_create_ship_point(str(shipment["index-from"]), settings)
         ship_point_to_id = await get_or_create_ship_point(str(shipment["index-to"]), settings)
+
+        shipment_model = ShipmentModel(
+            ext_id=shipment['id'],
+            barcode=shipment['barcode'],
+            order_num=shipment['order-num'],
+            mail_type=shipment['mail-type'],
+            mail_cat=shipment['mail-category'],
+            declared_values=shipment.get('declared-values'),
+            dimensions=shipment.get('dimensions'),
+        )
