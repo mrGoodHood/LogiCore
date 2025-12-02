@@ -328,3 +328,5 @@ async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipmen
             cod_payment=shipment['payment'],
             rate=shipment_rate,
         )
+        shipment_id = await add_shipment(acc_id, user_id, batch_id, shipment_model)
+        await add_rate(batch_id, shipment_rate, shipment_id)
