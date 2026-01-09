@@ -330,3 +330,18 @@ async def save_shipment(acc_id, user_id, settings, batch_id, batch_name, shipmen
         )
         shipment_id = await add_shipment(acc_id, user_id, batch_id, shipment_model)
         await add_rate(batch_id, shipment_rate, shipment_id)
+
+
+async def add_shipment(acc_id, user_id, batch_id, shipment_data):
+    async with async_session_maker() as session, session.begin():
+        obj = Barcode(
+            ContractID=acc_id,
+            UserID=user_id,
+            BatchID=batch_id,
+            ExtID=shipment_data.ext_id,
+            Barcode=shipment_data.barcode,
+            OrderNum=shipment_data.order_num,
+            MailType=shipment_data.mail_type,
+            MailCat=shipment_data.mail_cat,
+            DeclaredValues=shipment_data.declared_values,
+            Dimensions=shipment_data.dimensions,
