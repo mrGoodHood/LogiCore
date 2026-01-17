@@ -345,3 +345,21 @@ async def add_shipment(acc_id, user_id, batch_id, shipment_data):
             MailCat=shipment_data.mail_cat,
             DeclaredValues=shipment_data.declared_values,
             Dimensions=shipment_data.dimensions,
+            MinDaysShip=shipment_data.delidery_time.get('min-days'),
+            MaxDaysShip=shipment_data.delidery_time.get('max-days'),
+            IndexFrom=shipment_data.index_from,
+            IndexTo=shipment_data.index_to,
+            PointFrom=shipment_data.point_from,
+            PointTo=shipment_data.point_to,
+            Mass=shipment_data.mass,
+            ShelfLifeDays=shipment_data.shelf_life_days,
+            InsureValue=shipment_data.insure_value,
+            CODPayment=shipment_data.cod_payment,
+            TotalRate=shipment_data.rate.get_rate(),
+            TotalRateVat=shipment_data.rate.get_rate_vat(),
+            NoTrack=True,
+
+        )
+        session.add(obj)
+        await session.commit()
+        return obj.ID
