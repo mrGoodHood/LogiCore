@@ -19,12 +19,11 @@ def set_track_summary_filter(query: Select, query_filter: Optional[TrackSummaryF
         return query.where(TrackSummary.IsHot == False)
     elif query_filter == TrackSummaryFilter.IS_HANGING:
         month_ago = datetime.today() - relativedelta(months=+1)
-        return (query.wheк
-            (
+        return query.where(
             and_(
                 TrackSummary.IsHot == True,
                 TrackShipHistory.OperationDate < month_ago,
             )
-        ))
+        )
     return query
-    #TODO
+
