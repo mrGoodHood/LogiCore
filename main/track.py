@@ -27,3 +27,10 @@ def set_track_summary_filter(query: Select, query_filter: Optional[TrackSummaryF
         )
     return query
 
+
+def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort_desc: bool) -> Select:
+    if sort == TrackSummarySort.TRACK_STATUS:
+        if sort_desc:
+            query = query.order_by(TrackShipStatus.OperationName.desc())
+
+
