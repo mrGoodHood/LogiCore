@@ -32,5 +32,5 @@ def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort
     if sort == TrackSummarySort.TRACK_STATUS:
         if sort_desc:
             query = query.order_by(TrackShipStatus.OperationName.desc())
-
-
+        else:
+            query = query.order_by(TrackShipStatus.OperationName.asc())
