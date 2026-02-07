@@ -34,3 +34,9 @@ def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort
             query = query.order_by(TrackShipStatus.OperationName.desc())
         else:
             query = query.order_by(TrackShipStatus.OperationName.asc())
+    elif sort == TrackSummarySort.BATCH_SENT_DATE:
+        if sort_desc:
+            query = query.order_by(Batch.BatchSentDate.desc())
+        else:
+            query = query.order_by(Batch.BatchSentDate.asc())
+
