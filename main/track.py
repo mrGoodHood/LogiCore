@@ -40,3 +40,4 @@ def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort
         else:
             query = query.order_by(Batch.BatchSentDate.asc())
 
+    return query.order_by(Barcode.ID)
