@@ -41,3 +41,6 @@ def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort
             query = query.order_by(Batch.BatchSentDate.asc())
 
     return query.order_by(Barcode.ID)
+
+def set_batch_name_filter(query: Select, batch_name: str) -> Select:
+    return query.where(Batch.BatchName == batch_name)
