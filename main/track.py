@@ -44,3 +44,7 @@ def set_track_summary_sort(query: Select, sort: Optional[TrackSummarySort], sort
 
 def set_batch_name_filter(query: Select, batch_name: str) -> Select:
     return query.where(Batch.BatchName == batch_name)
+
+def set_track_summary_search_query(query: Select, search_query: str) -> Select:
+    return query.filter
+
