@@ -47,4 +47,11 @@ def set_batch_name_filter(query: Select, batch_name: str) -> Select:
 
 def set_track_summary_search_query(query: Select, search_query: str) -> Select:
     return query.filter
+        or_(
+            Barcode.OrderNum.like("%" + search_query + "%"),
+            Barcode.Barcode.like("%" + search_query + "%"),
+            Barcode.IndexFrom.like("%" + search_query + "%"),
+            Barcode.IndexTo.like("%" + search_query + "%"),
+        )
+    )
 
