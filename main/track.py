@@ -55,3 +55,9 @@ def set_track_summary_search_query(query: Select, search_query: str) -> Select:
         )
     )
 
+
+async def get_track_summary_info(
+    user_id: UUID,
+    page: int,
+    page_size: int,
+        #TODO
