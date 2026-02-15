@@ -60,4 +60,9 @@ async def get_track_summary_info(
     user_id: UUID,
     page: int,
     page_size: int,
-        #TODO
+    sort_desc: bool,
+    batch_name: Optional[str],
+    search_query: Optional[str],
+    sort: Optional[TrackSummarySort],
+    query_filter: Optional[TrackSummaryFilter],
+)
