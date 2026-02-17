@@ -65,4 +65,7 @@ async def get_track_summary_info(
     search_query: Optional[str],
     sort: Optional[TrackSummarySort],
     query_filter: Optional[TrackSummaryFilter],
-)
+) -> list[dict[str, Any]]:
+    async with async_session_maker() as session:
+        ShipPointFrom = aliased(ShipPoint)
+        ShipPointTo = aliased(ShipPoint)
