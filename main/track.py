@@ -69,3 +69,32 @@ async def get_track_summary_info(
     async with async_session_maker() as session:
         ShipPointFrom = aliased(ShipPoint)
         ShipPointTo = aliased(ShipPoint)
+
+        statement = (
+            select(
+                Contract2User.ID,
+                Barcode.OrderNum,
+                Barcode.Barcode,
+                Barcode.IndexFrom,
+                Barcode.IndexTo,
+                TrackShipStatus.OperationName,
+                TrackShipHistory.OperationDate,
+                Barcode.MailType,
+                TrackCODStatus.OperationName,
+                TrackCODHistory.OperationDate,
+                Barcode.Mass,
+                Batch.BatchName,
+                Batch.BatchSentDate,
+                Batch.PostOfficeCode,
+                Barcode.TotalRate,
+                Barcode.TotalRateVat,
+                Barcode.CODPayment,
+                ShipPointFrom.Region,
+                ShipPointFrom.District,
+                ShipPointFrom.Settlement,
+                ShipPointFrom.AddressSource,
+                ShipPointTo.Region,
+                ShipPointTo.District,
+                ShipPointTo.Settlement,
+                ShipPointTo.AddressSource,
+            )
