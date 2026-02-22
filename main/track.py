@@ -98,3 +98,18 @@ async def get_track_summary_info(
                 ShipPointTo.Settlement,
                 ShipPointTo.AddressSource,
             )
+            .join(Contract, Contract2User.ContractID == Contract.ID)
+            .join(Batch, Contract.ID == Batch.ContractID)
+            .join(Barcode, Batch.ID == Barcode.BatchID)
+            .join(ShipPointFrom, Barcode.PointFrom == ShipPointFrom.ID, isouter=True)
+            .join(ShipPointTo, Barcode.PointTo == ShipPointTo.ID, isouter=True)
+            .join(
+                TrackSummary,
+                Barcode.ID == TrackSummary.BarcodeID,
+            )
+            .join(TrackShipHistory, TrackSummary.TrackHistoryID == TrackShipHistory.ID, isouter=True)
+            .join(TrackShipStatus, TrackShipHistory.TrackStatusID == TrackShipStatus.ID, isouter=True)
+            .join(TrackCODHistory, TrackSummary.TrackCODHistoryID == TrackCODHistory.ID, isouter=True)
+            .join(TrackCODStatus, TrackCODHistory.TrackCODStatusID == TrackCODStatus.ID, isouter=True)
+            .where(Contract2User.UserID == user_id)
+        )
