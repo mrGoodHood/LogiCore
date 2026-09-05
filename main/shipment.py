@@ -370,3 +370,8 @@ async def get_or_create_ship_point(index: str, settings: dict[str, Any]) -> int:
         return ship_point_id[0]
     else:
         return await save_ship_point(index, settings)
+
+
+async def get_ship_point(index: str) -> Optional[list[int]]:
+    async with async_session_maker() as session:
+        statement = select(ShipPoint.ID).where(ShipPoint.PostalCode == index)
