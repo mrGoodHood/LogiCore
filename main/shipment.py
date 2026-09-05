@@ -363,3 +363,10 @@ async def add_shipment(acc_id, user_id, batch_id, shipment_data):
         session.add(obj)
         await session.commit()
         return obj.ID
+
+
+async def get_or_create_ship_point(index: str, settings: dict[str, Any]) -> int:
+    if ship_point_id := await get_ship_point(index):
+        return ship_point_id[0]
+    else:
+        return await save_ship_point(index, settings)
